@@ -1,0 +1,207 @@
+doctype html
+head
+  title Movie Page
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  style.
+    .header{
+    padding: 20px;
+    text-align: center;
+    background: #FFFFFF;
+    }
+    .navigationBar {
+    overflow: hidden;
+    background-color: #404E6C;
+    }
+    .navigationBar a {
+    /*Style for the Tab Text in Navigation Bar*/
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    color: white;
+    float: left;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    }
+    .navigationBar a.positionRight {
+    /*Positions the Signout Button Correctly*/
+    float: right;
+    }
+    * {
+    /* Ensures that the main column is next to side column */
+    box-sizing: border-box;
+    }
+    /* Column container */
+    .row {
+    display: flex;
+    flex-wrap: wrap;
+    }
+    .sideColumn {
+    flex: 20%;
+    background-color: #f1f1f1;
+    padding: 20px;
+    }
+    .mainColumn {
+    flex: 80%;
+    background-color: white;
+    padding: 20px 40px;
+    }
+    label, p{
+      font-family: sans-serif;
+    }
+    button{
+      font-family: sans-serif;
+      background-color: #0033A1; 
+      border: none;
+      color: white;
+      padding: 13px 23px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 6px;
+    }
+    button:hover {
+    background-color: #012573;
+    color: white;
+    }
+    .card {
+     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+     transition: 0.3s;
+     width: 80%;
+     border-radius: 5px;
+    }
+    .card:hover {
+     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    }
+.header
+  img(src='http://localhost:3000/Frame 1.png' width='40%' height='40%')
+.navigationBar
+  a.positionLeft(href='/home') Homepage
+  a.positionLeft(href='/search') Search
+  a.positionLeft(href='/create') Create
+  a.positionRight(href='/logout') Log Out
+  a.positionRight(href='/profile') Profile
+.row
+  .sideColumn
+    p
+      | Genre Keywords:
+    each result in genre
+        a(href='/movies?search='+ (result.trim().toLowerCase()) style="font-family: sans-serif") !{result}
+        br
+    p
+      | Similar Movies:
+    each result in similar
+        a(href='/movies/'+ (result.imdbID) style="font-family: sans-serif") !{result.Title}
+        br
+  .mainColumn
+    div(class='card' style="margin-left: 120px; margin-top: 30px ")
+        table
+            tr
+              th(style="width: 100%")
+            tr
+              td
+                div(class='container' style='padding: 27px 20px 20px 20px')
+                  p(style="font-weight: bold; font-size: 18px")
+                    | !{movie.Title} (!{movie.Year})
+                  p(style="color: #3D3D3D; font-size: 14px")
+                    | Release Year: !{movie.Year} | Runtime: !{movie.Runtime} | Average Rating: !{movie.imdbRating}/10
+                  p(style="color: #3D3D3D; font-size: 14px")
+                    | !{movie.Plot}
+            
+            tr
+              td
+                img(src=movie.Poster width="200" height="300" style="padding-left: 20px")
+
+            tr
+              td
+                  p(style="color: #3D3D3D; font-size: 14px; padding-left: 20px")
+                    | Director: 
+                    each result in director
+                        br
+                        a(href='/people/'+ (result.id) style="font-family: sans-serif") !{result.name}
+                  p(style="color: #3D3D3D; font-size: 14px; padding-left: 20px")
+                    | Writer: 
+                    each result in writer
+                        br
+                        a(href='/people/'+ (result.id) style="font-family: sans-serif") !{result.name}
+                  p(style="color: #3D3D3D; font-size: 14px; padding-left: 20px")
+                    | Actors/Actresses: 
+                    each result in actors
+                        br
+                        a(href='/people/'+ (result.id) style="font-family: sans-serif") !{result.name}
+    
+    div(class='card' style="margin-left: 120px; margin-top: 30px ")
+        table
+            tr
+              th(style="width: 100%")
+            tr
+              td
+                div(class='container' style='padding: 27px 20px 20px 20px')
+                  p(style="font-weight: bold; font-size: 18px;")
+                    | Write a Review
+                    br
+                  form(action='/reviews/'+movie.imdbID method='post' style="width: 500px; margin-left: 20px;")
+                    label Rating (Out of 10)* 
+                    input(type='text' name="score" placeholder="ex: 8.5" required)
+                    br
+                    br
+                    label Short Summary
+                    input(type='text' name="summary" placeholder="ex: Great Movie")
+                    br
+                    br
+                    label Long Summary 
+                    input(type='text' name="fullSummary")
+                    br
+                    br
+                    button(type='submit') Create Review
+    
+    if !session.user.regularUser
+      div(class='card' style="margin-left: 120px; margin-top: 30px ")
+          table
+              tr
+                th(style="width: 100%")
+              tr
+                td
+                  div(class='container' style='padding: 27px 20px 20px 20px')
+                    p(style="font-weight: bold; font-size: 18px;")
+                      | Add Actors/Writers/Directors
+                      br
+                    form(action='/add/'+movie.imdbID method='post' style="width: 500px; margin-left: 20px;")
+                      label Name 
+                      br
+                      label(style="color: #3D3D3D; font-size: 14px;") (Person must exist within database, if not you may head over to 'Create' tab)
+                      input(type='text' name="name" placeholder="ex: Tom Cruise")
+                      br
+                      br
+                      button(type='submit') Add Person
+    
+    div(class='card' style="margin-left: 120px; margin-top: 30px ")
+        table
+            tr
+              th(style="width: 100%")
+            tr
+              td
+                div(class='container' style='padding: 27px 20px 20px 20px')
+                  p(style="font-weight: bold; font-size: 18px")
+                    | View Reviews
+
+                    each result in movie.Reviews
+                        br
+                        p(style="color: #0033A1; font-weight: bold; font-size: 13px")
+                          | By: !{result.user} | Score: !{result.score}
+                        p(style="font-size: 14px")
+                          | Brief Summary: !{result.summary}
+                        p(style="font-size: 14px")
+                          | Full Summary: !{result.fullSummary}
+
+

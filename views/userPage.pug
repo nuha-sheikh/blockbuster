@@ -1,0 +1,126 @@
+doctype html
+head
+  title User Logged In
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  style.
+    .header{
+    padding: 20px;
+    text-align: center;
+    background: #FFFFFF;
+    }
+    .navigationBar {
+    overflow: hidden;
+    background-color: #404E6C;
+    }
+    .navigationBar a {
+    /*Style for the Tab Text in Navigation Bar*/
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    color: white;
+    float: left;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    }
+    .navigationBar a.positionRight {
+    /*Positions the Signout Button Correctly*/
+    float: right;
+    }
+    * {
+    /* Ensures that the main column is next to side column */
+    box-sizing: border-box;
+    }
+    /* Column container */
+    .row {
+    display: flex;
+    flex-wrap: wrap;
+    }
+    .sideColumn {
+    flex: 20%;
+    background-color: #f1f1f1;
+    padding: 20px;
+    }
+    .mainColumn {
+    flex: 80%;
+    background-color: white;
+    padding: 20px 40px;
+    }
+    label, p{
+      font-family: sans-serif;
+    }
+    button{
+      font-family: sans-serif;
+      background-color: #0033A1; 
+      border: none;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 6px;
+    }
+    button:hover {
+    background-color: #012573;
+    color: white;
+    }
+    .card {
+     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+     transition: 0.3s;
+     width: 80%;
+     border-radius: 5px;
+    }
+    .card:hover {
+     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+.header
+  img(src='http://localhost:3000/Frame 1.png' width='40%' height='40%')
+.navigationBar
+  a.positionLeft(href='/home') Homepage
+  a.positionLeft(href='/search') Search
+  a.positionLeft(href='/create') Create
+  a.positionRight(href='/logout') Log Out
+  a.positionRight(href='/profile') Profile
+.row
+  .sideColumn
+      p(style="font-weight: bold;") 
+        | !{user.username}'s Account
+    
+      p
+        if check
+          div
+            form(action='/unfollowuser/'+user.id  method='post')
+              button(type='submit') Unfollow
+              br
+        else
+          div
+            form(action='/followuser/'+user.id  method='post')
+              button(type='submit') Follow
+              br
+
+      p(style="font-size: 15px") 
+        | Regular user: !{user.regularUser}
+
+  .mainColumn
+      div(class='card' style="margin-left: 120px; margin-top: 30px ")
+          table
+              tr
+                th(style="width: 100%")
+              tr
+                td
+                  div(class='container' style='padding: 27px 20px 20px 20px')
+                    .followingPeople
+                      p(style="font-weight: bold;") 
+                        | Who    '!{user.username}'    Follows:
+                      each follow in user.peopleFollowing
+                              a(style="font-family: sans-serif;" href='http://localhost:3000/people/'+ follow.id) !{follow.name}
+                              br
+
+                    .reviews
+                      p(style="font-weight: bold;")  Reviews:
+                        br
+                        each review in user.moviesReviewed
+                              br
+                              a( href='http://localhost:3000/movies/'+ review.id) !{review.Title}
+                              
+

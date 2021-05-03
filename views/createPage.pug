@@ -1,0 +1,116 @@
+doctype html
+head
+  title Create
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  style.
+    .header{
+    padding: 20px;
+    text-align: center;
+    background: #FFFFFF;
+    }
+    .navigationBar {
+    overflow: hidden;
+    background-color: #404E6C;
+    }
+    .navigationBar a {
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    color: white;
+    float: left;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    }
+    .navigationBar a.positionRight {
+    float: right;
+    }
+    * {
+    box-sizing: border-box;
+    }
+    .row {
+    display: flex;
+    flex-wrap: wrap;
+    }
+    .mainColumn {
+    flex: 80%;
+    background-color: white;
+    padding: 20px 40px;
+    }
+    p{
+      font-family: sans-serif;
+    }
+    button{
+      font-family: sans-serif;
+      background-color: #0033A1; 
+      border: none;
+      color: white;
+      padding: 13px 23px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 6px;
+    }
+    button:hover {
+    background-color: #012573;
+    color: white;
+    }
+    .card {
+     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+     transition: 0.3s;
+     width: 40%;
+     display:inline-block;
+     border-radius: 5px;
+    }
+    .card:hover {
+     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+.header
+  img(src='Frame 1.png' width='40%' height='40%')
+.navigationBar
+  a.positionLeft(href='/home') Homepage
+  a.positionLeft(href='/search') Search
+  a.positionLeft(href='/create') Create
+  a.positionRight(href='/logout') Log Out
+  a.positionRight(href='/profile') Profile
+.row
+  .mainColumn
+    .trendingMovies
+      div(class='card' style="margin-left: 50px")
+        table
+            tr
+              th(style="width: 50%")
+              th(style="width: 50%")
+            tr
+              td
+                div(class='container' style='padding: 27px 20px 20px 20px')
+                  p(style="font-weight: bold; font-size: 18px")
+                    | Create a Movie
+                  p(style="color: #3D3D3D; font-size: 14px")
+                    | Must be a Contributing User
+                  br
+                  br
+                  form(action="/createmovie" method="get")
+                    button(type='submit') Click Here
+              td 
+                img(src='movie.png' width='90%' height='40%' align='right' style='padding-right: 20px')
+      
+      div(class='card' style="margin-left: 110px")
+        table
+            tr
+              th(style="width: 50%")
+              th(style="width: 50%")
+            tr
+              td
+                div(class='container' style='padding: 8px 20px 20px 20px')
+                  p(style="font-weight: bold; font-size: 18px")
+                    | Create a Director/Person/Actor
+                  p(style="color: #3D3D3D; font-size: 14px")
+                    | Must be a Contributing User
+                  br
+                  br
+                  form(action="/createperson" method="get")
+                    button(type='submit') Click Here
+              td 
+                img(src='chair.png' width='80%' height='40%' align='right' style='padding-right: 20px')

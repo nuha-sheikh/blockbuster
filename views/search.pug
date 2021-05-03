@@ -1,0 +1,169 @@
+doctype html
+head
+  title Search
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  style.
+    .header{
+    padding: 20px;
+    text-align: center;
+    background: #FFFFFF;
+    }
+    .navigationBar {
+    overflow: hidden;
+    background-color: #404E6C;
+    }
+    .navigationBar a {
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    color: white;
+    float: left;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    }
+    .navigationBar a.positionRight {
+    float: right;
+    }
+    * {
+    box-sizing: border-box;
+    }
+    .row {
+    display: flex;
+    flex-wrap: wrap;
+    }
+    .mainColumn {
+    flex: 80%;
+    background-color: white;
+    padding: 20px 40px;
+    }
+    p{
+      font-family: sans-serif;
+    }
+    button{
+      font-family: sans-serif;
+      background-color: #0033A1; 
+      border: none;
+      color: white;
+      padding: 13px 23px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 6px;
+    }
+    button:hover {
+    background-color: #012573;
+    color: white;
+    }
+    .card {
+     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+     transition: 0.3s;
+     width: 60%;
+     border-radius: 5px;
+    }
+    .card:hover {
+     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+    input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    }
+.header
+  img(src='Frame 1.png' width='40%' height='40%')
+.navigationBar
+  a.positionLeft(href='/home') Homepage
+  a.positionLeft(href='/search') Search
+  a.positionLeft(href='/create') Create
+  a.positionRight(href='/logout') Log Out
+  a.positionRight(href='/profile') Profile
+.row
+  .mainColumn
+    .trendingMovies
+      div(class='card' style="margin-left: 250px")
+        div(class='container' style='padding: 27px 20px 20px 20px')
+          p(style="font-weight: bold; font-size: 18px")
+            | Results 
+          p(style="color: #3D3D3D; font-size: 14px")
+            | (Results will appear here) You can click on results for further information
+          
+          div#movieDisplay
+            br
+
+            each user in users
+              a(href='users/'+ user.id style="font-family: sans-serif") !{user.username}
+              br
+            
+            each movie in movies
+              a(href='movies/'+ movie.movie.imdbID style="font-family: sans-serif") !{movie.movie.Title}
+              br
+
+            each person in people
+              a(href='people/'+ person.id style="font-family: sans-serif") !{person.name}
+              br
+
+      div(class='card' style="margin-left: 250px; margin-top: 30px ")
+        table
+            tr
+              th(style="width: 70%")
+              th(style="width: 30%")
+            tr
+              td
+                div(class='container' style='padding: 27px 20px 20px 20px')
+                  p(style="font-weight: bold; font-size: 18px")
+                    | Search Movie
+                  p(style="color: #3D3D3D; font-size: 14px")
+                    | (Use Title, Year, Rating - out of 10, or Genre)
+                  form(action='/searchMovie' method='post')
+                    input(type='text' name="movie" placeholder="ex: Jumanji")
+                    br
+                    br
+                    button(type='submit') Search
+              td 
+                img(src='movie.png' width='85%' height='30%' align='right' style='padding-right: 20px')
+
+      div(class='card' style="margin-left: 250px; margin-top: 30px ")
+        table
+            tr
+              th(style="width: 70%")
+              th(style="width: 30%")
+            tr
+              td
+                div(class='container' style='padding: 27px 20px 20px 20px')
+                  p(style="font-weight: bold; font-size: 18px")
+                    | Search Person
+                  p(style="color: #3D3D3D; font-size: 14px")
+                    | (Use Name)
+                  form(action='/searchPerson' method='post')
+                    input(type='text' name='person' placeholder="ex: Tom Cruise")
+                    br
+                    br
+                    button(type='submit') Search
+              td 
+                img(src='chair.png' width='80%' height='30%' align='right' style='padding-right: 20px')
+
+      div(class='card' style="margin-left: 250px; margin-top: 30px ")
+        table
+            tr
+              th(style="width: 70%")
+              th(style="width: 30%")
+            tr
+              td
+                div(class='container' style='padding: 27px 20px 20px 20px')
+                  p(style="font-weight: bold; font-size: 18px")
+                    | Search User
+                  p(style="color: #3D3D3D; font-size: 14px")
+                    | (Use Username)
+                  form(action='/searchUser' method='post')
+                    input(type='text' name='user' placeholder="ex: user0")
+                    br
+                    br
+                    button(type='submit') Search
+              td 
+                img(src='user.png' width='80%' height='60%' align='right' style='padding-right: 20px')
+

@@ -1,0 +1,84 @@
+doctype html
+head
+  title Sign Up
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  style.
+    .header{
+    padding: 20px;
+    text-align: center;
+    background: #FFFFFF;
+    }
+    .navigationBar {
+    overflow: hidden;
+    background-color: #404E6C;
+    }
+    .navigationBar a {
+    /*Style for the Tab Text in Navigation Bar*/
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    color: white;
+    float: left;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    }
+    .navigationBar a.positionRight {
+    /*Positions the Signout Button Correctly*/
+    float: right;
+    }
+    * {
+    /* Ensures that the main column is next to side column */
+    box-sizing: border-box;
+    }
+    /* Column container */
+    .row {
+    display: flex;
+    flex-wrap: wrap;
+    }
+    .sideColumn {
+    flex: 20%;
+    background-color: #f1f1f1;
+    padding: 20px;
+    }
+    .mainColumn {
+    flex: 80%;
+    background-color: white;
+    padding: 20px 40px;
+    }
+.header
+  img(src='Frame 1.png' width='40%' height='40%')
+.navigationBar
+  a.positionLeft(href='/home') Homepage
+  a.positionLeft(href='/search') Search
+  a.positionLeft(href='/create') Create
+  a.positionRight(href='/logout') Log Out
+  a.positionRight(href='/profile') Profile
+.row
+  .mainColumn
+    .trendingMovies
+      p
+        | Create Review
+      p
+        | Enter the following details to create a new review:
+      ul
+        form(action="/reviews" method="POST")
+          label Movie Title: 
+          input(type='text' name="Title")
+          br
+          br
+          label Rating (Out of 10): 
+          input(type='text' name="score")
+          br
+          br
+          label Short Summary: 
+          input(type='text' name="summary")
+          br
+          br
+          label Long Summary: 
+          input(type='text' name="fullSummary")
+          br
+          br
+          button(type='submit') Create Movie Review

@@ -1,0 +1,162 @@
+doctype html
+head
+  title User Profile
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  script(src='server.js')
+  style.
+    .header{
+    padding: 20px;
+    text-align: center;
+    background: #FFFFFF;
+    }
+    .navigationBar {
+    overflow: hidden;
+    background-color: #404E6C;
+    }
+    .navigationBar a {
+    /*Style for the Tab Text in Navigation Bar*/
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    color: white;
+    float: left;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    }
+    .navigationBar a.positionRight {
+    /*Positions the Signout Button Correctly*/
+    float: right;
+    }
+    * {
+    /* Ensures that the main column is next to side column */
+    box-sizing: border-box;
+    }
+    /* Column container */
+    .row {
+    display: flex;
+    flex-wrap: wrap;
+    }
+    .sideColumn {
+    flex: 20%;
+    background-color: #f1f1f1;
+    padding: 20px;
+    }
+    .mainColumn {
+    flex: 80%;
+    background-color: white;
+    padding: 20px 40px;
+    }
+    a, label, p{
+      font-family: sans-serif;
+    }
+    button{
+      font-family: sans-serif;
+      background-color: #0033A1; 
+      border: none;
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 6px;
+    }
+    button:hover {
+    background-color: #012573;
+    color: white;
+    }
+    .card {
+     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+     transition: 0.3s;
+     width: 60%;
+     border-radius: 5px;
+    }
+    .card:hover {
+     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+.header
+  img(src='Frame 1.png' width='40%' height='40%')
+body
+  if session.loggedin
+    .navigationBar
+      a.positionLeft(href='/home') Homepage
+      a.positionLeft(href='/search') Search
+      a.positionLeft(href='/create') Create
+      a.positionRight(href='/logout') Log Out
+      a.positionRight(href='/profile') Profile
+    .row
+      .sideColumn
+        p
+          | Your Account Profile
+          br
+        .accountInfo
+          p Username: !{user.username}
+          p
+            if user.regularUser
+                a(href='http://localhost:3000/status') Switch to Contributing User 
+            else
+                a(href='http://localhost:3000/status') Switch to Regular User 
+      .mainColumn
+        if user.anyNotifs
+          div(class='card' style="margin-left: 120px; margin-top: 30px ")
+            table
+                tr
+                  th(style="width: 100%")
+                tr
+                  td
+                    div(class='container' style='padding: 27px 20px 20px 20px')
+                      p(style="font-weight: bold; font-size: 18px")
+                        | You have Notifications!
+                      div
+                        each movie in user.notifications
+                            div
+                              p
+                                | Here's a movie you might be interested in: !{movie}
+
+        div(class='card' style="margin-left: 120px; margin-top: 30px ")
+          table
+              tr
+                th(style="width: 100%")
+              tr
+                td
+                  div(class='container' style='padding: 27px 20px 20px 20px')
+                    p(style="font-weight: bold; font-size: 18px")
+                      | People you follow:
+                    div
+                      each person in user.peopleFollowing
+                          div
+                            form(action='/unfollowperson/'+person.id method='post')
+                              a(href='people/'+ person.id) !{person.name}
+                              button(type='submit' style="margin: 5px 10px;") Unfollow
+                              br
+        
+        div(class='card' style="margin-left: 120px; margin-top: 30px ")
+          table
+              tr
+                th(style="width: 100%")
+              tr
+                td
+                  div(class='container' style='padding: 27px 20px 20px 20px')
+                    p(style="font-weight: bold; font-size: 18px")
+                      | Users you follow:
+                    div
+                      each userObject in user.usersFollowing
+                          div
+                            form(action='/unfollowuser/'+userObject.id method='post')
+                              a(href='users/'+ userObject.id) !{userObject.username}
+                              button(type='submit' style="margin: 5px 10px;") Unfollow
+                              br
+        
+        div(class='card' style="margin-left: 120px; margin-top: 30px ")
+          table
+              tr
+                th(style="width: 100%")
+              tr
+                td
+                  div(class='container' style='padding: 27px 20px 20px 20px')
+                    p(style="font-weight: bold; font-size: 18px")
+                      | Movies you might like:
+                    ul
+                      each movie in movies
+                          li
+                            a(href='movies/'+ movie.id) !{movie.Title}

@@ -1,0 +1,154 @@
+doctype html
+head
+  title Create Movie
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  style.
+    h1 {
+        font-family: sans-serif;
+        text-align: center;
+        font-size: 25px;
+        color: #0033A1;
+    }
+    label, textarea, p{
+      font-family: sans-serif;
+      color: #3D3D3D;
+    }
+    label{
+      font-family: sans-serif;
+      font-size: 13px;
+      font-weight: bold;
+    }
+    button{
+      font-family: sans-serif;
+      background-color: #0033A1; 
+      border: none;
+      color: white;
+      padding: 13px 23px;
+      font-size: 12px;
+      font-weight: bold;
+      border-radius: 6px;
+    }
+    button:hover {
+    background-color: #012573;
+    color: white;
+    }
+    input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    }
+    .header{
+    padding: 20px;
+    text-align: center;
+    background: #FFFFFF;
+    }
+    .navigationBar {
+    overflow: hidden;
+    background-color: #404E6C;
+    }
+    .navigationBar a {
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    color: white;
+    float: left;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    }
+    .navigationBar a.positionRight {
+    float: right;
+    }
+    * {
+    box-sizing: border-box;
+    }
+    .row {
+    display: flex;
+    flex-wrap: wrap;
+    }
+    .mainColumn {
+    flex: 80%;
+    background-color: #F5F8FA;
+    padding: 40px 40px;
+    }
+    .icon {
+    width: 700px;
+    height: 1200px;
+    background: white;
+    box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
+    margin-right: 10%;
+    border-style: none;
+    border-radius: 10px;
+    padding-top: 26px;
+    display: flex;
+    justify-content: center;
+    }
+    .container {
+    padding: 16px 50px;
+    }
+.header
+  img(src='Frame 1.png' width='40%' height='40%')
+.navigationBar
+  a.positionLeft(href='/home') Homepage
+  a.positionLeft(href='/search') Search
+  a.positionLeft(href='/create') Create
+  a.positionRight(href='/logout') Log Out
+  a.positionRight(href='/profile') Profile
+.row
+  .mainColumn
+    .trendingMovies
+      div(class='icon')
+        div(class='container')
+          h1
+            | Create Movie
+
+          form(action="/movies" method="POST")
+              label TITLE* 
+              br
+              input(type='text' name="Title", placeholder="ex: Sleeping Beauty", required)
+              br
+              br
+              label RUNTIME* 
+              input(type='text' name="Runtime" placeholder="ex: 75 min", required)
+              br
+              br
+              label YEAR* 
+              input(type='text' name="Year" placeholder="ex: 1959", required)
+              br
+              br
+              label WHAT WOULD YOU RATE THIS MOVIE (OUT OF 10)?* 
+              input(type='text' name="imdbRating" placeholder="ex: 7.2", required)
+              br
+              br
+              label WRITER(S)* 
+              input(type='text' name="Writer" placeholder="ex: Mark Steven Johnson", required)
+              br
+              br
+              label DIRECTORS(S)*
+              input(type='text' name="Director"  placeholder="ex: John Lasseter", required)
+              br
+              br
+              label ACTOR(S)* 
+              input(type='text' name="Actors" placeholder="ex: Steve Martin, Tom Cruise", required)
+              br
+              br
+              label PLOT (required) 
+              .form-group.col-md-4
+                textarea(rows=3 cols="80" name="Plot", required)
+                br
+                br
+              label GENRE(S)
+              input(type='text' name="Genre" placeholder="ex: Animation, Family, Fantasy")
+              br
+              br
+              label FEEL FREE TO LEAVE A LINK TO A MOVIE POSTER 
+              input(type='text' name="Poster")
+              br
+              br
+              button(type='submit') CREATE
