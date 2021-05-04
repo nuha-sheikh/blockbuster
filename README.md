@@ -17,26 +17,26 @@ Express: 4.17.1
 Pug: 3.0 
 
 Files:
-views/createMovie.pug
-views/createPage.pug
-views/createPerson.pug
-views/homePage.pug
-views/moviePage.pug
-views/peoplePage.pug
-views/script.js
-views/search.pug
-views/signinPage.pug
-views/signupPage.pug
-views/userHomepage.pug
-views/userPage.pug
-views/userprofilePage.pug
-business_logic.js
-server.js
-movie-data-short.json
-people.json
-reviews.json
-users.json
-chair.png
-Frame 1.png 
-movie.png 
-user.png 
+- views/createMovie.pug
+- views/createPage.pug
+- views/createPerson.pug
+- views/homePage.pug
+- views/moviePage.pug
+- views/peoplePage.pug
+- views/script.js
+- views/search.pug
+- views/signinPage.pug
+- views/signupPage.pug
+- views/userHomepage.pug
+- views/userPage.pug
+- views/userprofilePage.pug
+- business_logic.js
+- server.js
+- movie-data-short.json
+- people.json
+- reviews.json
+- users.json
+- chair.png
+- Frame 1.png 
+- movie.png 
+- user.png 
