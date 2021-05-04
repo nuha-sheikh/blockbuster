@@ -2,6 +2,7 @@
 An interactive movie ranking and social platform that remotely connects users amidst the COVID-19 pandemic 
 
 Author: Nuha Sheikh 
+
 Testing: The page can be found at http://localhost:3000/ in the browser 
 
 Launch:
