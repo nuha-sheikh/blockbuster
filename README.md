@@ -44,4 +44,4 @@ Files:
 - chair.png
 - Frame 1.png 
 - movie.png 
-- user.png 
+- user.png
