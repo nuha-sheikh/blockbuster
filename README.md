@@ -1,4 +1,4 @@
-# Blockbuster 2.0
+# Blockbuster 2.0 
 An interactive movie ranking and social platform that remotely connects users amidst the COVID-19 pandemic 
 
 Program Author: Nuha Sheikh 
