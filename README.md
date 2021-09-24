@@ -13,7 +13,7 @@ Launch:
 3. In command prompt, type "node server.js"
 4. Go to http://localhost:3000/ in browser 
 
-View further documentation here: https://drive.google.com/file/d/1Fs1yk0x1gNCnI4QOagiIoXoiQLFm85Ls/view?usp=sharing
+View Project Report: https://docs.google.com/document/d/1nEpkOnlUqSKZa2tvmeutxp37zCzQHlRUdAxUCjEkc5w/edit?usp=sharing
 
 OS: Mac 11.1
 
