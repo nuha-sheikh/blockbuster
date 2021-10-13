@@ -7,41 +7,10 @@ Demo of Web App: https://www.youtube.com/watch?v=zrLeSWwBGX8
 
 Testing: The page can be found at http://localhost:3000/ in the browser 
 
+Technologies used: JavaScript, Node.js, Express.js, Pug & CSS
+
 Launch:
 1. In command prompt, navigate to the directory containing the server.js file (using cd command) 
 2. In command prompt, type "npm install" 
 3. In command prompt, type "node server.js"
 4. Go to http://localhost:3000/ in browser 
-
-View Project Report: https://docs.google.com/document/d/1nEpkOnlUqSKZa2tvmeutxp37zCzQHlRUdAxUCjEkc5w/edit?usp=sharing
-
-OS: Mac 11.1
-
-Express: 4.17.1
-
-Pug: 3.0 
-
-Files:
-- views/createMovie.pug
-- views/createPage.pug
-- views/createPerson.pug
-- views/homePage.pug
-- views/moviePage.pug
-- views/peoplePage.pug
-- views/script.js
-- views/search.pug
-- views/signinPage.pug
-- views/signupPage.pug
-- views/userHomepage.pug
-- views/userPage.pug
-- views/userprofilePage.pug
-- business_logic.js
-- server.js
-- movie-data-short.json
-- people.json
-- reviews.json
-- users.json
-- chair.png
-- Frame 1.png 
-- movie.png 
-- user.png
