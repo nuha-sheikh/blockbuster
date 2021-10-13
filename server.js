@@ -3,7 +3,10 @@ const path = require('path');
 const fs = require("fs");
 let app = express();
 app.set("view engine", "pug");
-const model = require("./business_logic.js");
+const movieController = require("./business_logic/movie_logic.js");
+const personController = require("./business_logic/person_logic.js");
+const userController = require("./business_logic/user_logic.js");
+const authController = require("./business_logic/auth_logic.js");
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true}));
@@ -22,8 +25,8 @@ app.use(express.static("public"))
 const { writer } = require('repl');
 
 //Loads pictures used in website
-app.get("/Frame%201.png", (req, res) => {
-    fs.readFile('Frame 1.png', function(err, data){
+app.get("/logo.png", (req, res) => {
+    fs.readFile('./content/logo.png', function(err, data){
         if (err){
             res.status(404).send("error: no such file!")
         }
@@ -32,7 +35,7 @@ app.get("/Frame%201.png", (req, res) => {
 })
 
 app.get("/movie.png", (req, res) => {
-    fs.readFile('movie.png', function(err, data){
+    fs.readFile('./content/movie.png', function(err, data){
         if (err){
             res.status(404).send("error: no such file!")
         }
@@ -41,7 +44,7 @@ app.get("/movie.png", (req, res) => {
 })
 
 app.get("/chair.png", (req, res) => {
-    fs.readFile('chair.png', function(err, data){
+    fs.readFile('./content/chair.png', function(err, data){
         if (err){
             res.status(404).send("error: no such file!")
         }
@@ -50,7 +53,7 @@ app.get("/chair.png", (req, res) => {
 })
 
 app.get("/user.png", (req, res) => {
-    fs.readFile('user.png', function(err, data){
+    fs.readFile('./content/user.png', function(err, data){
         if (err){
             res.status(404).send("error: no such file!")
         }
@@ -85,7 +88,7 @@ app.get("/movies", function (req, res){
         if(req.query.search == undefined){
             req.query.search = "";
         }
-        let result = model.searchMovies(req.session.user, req.query.search);
+        let result = movieController.searchMovies(req.session.user, req.query.search);
         res.format({
             'text/html': function(){
                 if(result == null){
@@ -114,7 +117,7 @@ app.get("/movies", function (req, res){
 
 app.get("/movies/:movie", function(req, res){
     if(req.session.loggedin){
-        let result = model.getMovie(req.session.user, req.params.movie);
+        let result = movieController.getMovie(req.session.user, req.params.movie);
     res.format({
         'text/html': function(){
             if(result == null){
@@ -122,12 +125,12 @@ app.get("/movies/:movie", function(req, res){
               }else{
                   genre = result.Genre.split(',')
                   writers = result.Writer.split(',');
-                  newWriters = model.peopleList(writers);
+                  newWriters = personController.peopleList(writers);
                   actors = result.Actors.split(',')
-                  newActors = model.peopleList(actors);
+                  newActors = personController.peopleList(actors);
                   director = result.Director.split(',')
-                  newDirectors = model.peopleList(director);
-                  similar = model.similarMovies(result);
+                  newDirectors = personController.peopleList(director);
+                  similar = movieController.similarMovies(result);
                   res.status(200).render("moviePage.pug", {"director": newDirectors, "actors": newActors, "writer": newWriters, "genre": genre, "movie": result, "session": req.session, "similar": similar})
               }
         },
@@ -137,12 +140,12 @@ app.get("/movies/:movie", function(req, res){
               }else{
                 genre = result.Genre.split(',')
                 writers = result.Writer.split(',')
-                newWriters = model.peopleList(writers);
+                newWriters = personController.peopleList(writers);
                 actors = result.Actors.split(',')
-                newActors = model.peopleList(actors);
+                newActors = personController.peopleList(actors);
                 director = result.Director.split(',')
-                newDirectors = model.peopleList(director);
-                similar = model.similarMovies(result);
+                newDirectors = personController.peopleList(director);
+                similar = movieController.similarMovies(result);
                 res.status(200).send(JSON.stringify({"director": director, "actors": actors, "writer": writers, "genre": genre, "movie": result, "session": req.session, "similar": similar}))
               }
         }
@@ -157,7 +160,7 @@ app.get("/movies/:movie", function(req, res){
 
 app.post("/movies", function(req, res){
     if(req.session.loggedin){
-        let result = model.createMovie(req.session.user, req.body);
+        let result = movieController.createMovie(req.session.user, req.body);
         if(result){
             res.status(201).render("createMovie.pug")
         }else{
@@ -190,7 +193,7 @@ app.get("/users", function(req, res){
             req.query.search = "";
         }
         //return people page with given information
-        let result = model.searchUsers(req.session.user, req.query.search);
+        let result = userController.searchUsers(req.session.user, req.query.search);
         res.format({
             'text/html': function(){
                 if(result == null){
@@ -217,8 +220,8 @@ app.get("/users", function(req, res){
 
 app.get("/users/:user", function(req, res){
     if(req.session.loggedin){
-        let result = model.getUser(req.session.user, req.params.user);
-        let check = model.checkUser(req.session.user, req.params.user);
+        let result = userController.getUser(req.session.user, req.params.user);
+        let check = userController.checkUser(req.session.user, req.params.user);
         res.format({
             'text/html': function(){
                 if(result == null){
@@ -261,7 +264,7 @@ app.get("/people", function(req, res){
         if(req.query.search == undefined){
             req.query.search = "";
         }
-        let result = model.searchPeople(req.session.user, req.query.search);
+        let result = personController.searchPeople(req.session.user, req.query.search);
         res.format({
             'text/html': function(){
                 if(result == null){
@@ -286,8 +289,8 @@ app.get("/people", function(req, res){
 
 app.get("/people/:person", function(req, res){
     if(req.session.loggedin){
-        let result = model.getPerson(req.session.user, req.params.person);
-        let check = model.checkPerson(req.session.user, req.params.person);
+        let result = personController.getPerson(req.session.user, req.params.person);
+        let check = personController.checkPerson(req.session.user, req.params.person);
         res.format({
             'text/html': function(){
                 if(result == null){
@@ -389,7 +392,7 @@ app.get("/create", function(req, res){
 
 app.get("/status", function(req, res){
     if(req.session.loggedin){
-        let result = model.createContributingUser(req.session.user);
+        let result = userController.createContributingUser(req.session.user);
         if(result == null){
             res.status(404).send("Failed to make change status.");
         }else{
@@ -404,8 +407,8 @@ app.get("/status", function(req, res){
 function userProfile (req, res){
 
     if(req.session.loggedin){
-        let result = model.recommendedMovies(req.session.user);
-        if(model.authenticateSignUpUser(req.session.username)){
+        let result = movieController.recommendedMovies(req.session.user);
+        if(authController.authenticateSignUpUser(req.session.username)){
             res.status(200).render("userprofilePage.pug", {"user": req.session.user, "session": req.session, "movies": result})    
         }else{
             res.status(401).send("Invalid Credentials")
@@ -419,7 +422,7 @@ function userProfile (req, res){
 //POST Requests
 app.post("/add/:movieID", function(req, res){
     if(req.session.loggedin){
-        let result = model.addPerson(req.body, req.params.movieID);
+        let result = movieController.addMovie(req.body, req.params.movieID);
         if(result == null){
             res.status(404).send("Failed to add person.");
         }else{
@@ -433,7 +436,7 @@ app.post("/add/:movieID", function(req, res){
 
 app.post("/users", function(req, res){
     if(req.session.loggedin){
-        let result = model.createPerson(req.body);
+        let result = personController.createPerson(req.body);
         if(result == null){
             res.status(404).send("Failed to add person.");
         }else{
@@ -446,7 +449,7 @@ app.post("/users", function(req, res){
 })
 app.post("/reviews/:movieid", function(req, res){
     if(req.session.loggedin){
-        let result = model.createReview(req.session.user, req.body, req.params.movieid);
+        let result = movieController.createReview(req.session.user, req.body, req.params.movieid);
         if(result == null){
             res.status(404).send("Failed to add review.");
         }else{
@@ -459,7 +462,7 @@ app.post("/reviews/:movieid", function(req, res){
 })
 app.post("/followuser/:user", function (req, res){
     if(req.session.loggedin){
-        let result = model.followUser(req.session.user, req.params.user);
+        let result = userController.followUser(req.session.user, req.params.user);
         if(result == null){
             res.status(404).send("Failed to follow user.");
         }else{
@@ -472,7 +475,7 @@ app.post("/followuser/:user", function (req, res){
 })
 app.post("/unfollowuser/:user", function (req, res){
     if(req.session.loggedin){
-        let result = model.unfollowUser(req.session.user, req.params.user);
+        let result = userController.unfollowUser(req.session.user, req.params.user);
         if(result == null){
             res.status(404).send("Failed to unfollow user.");
         }else{
@@ -485,7 +488,7 @@ app.post("/unfollowuser/:user", function (req, res){
 })
 app.post("/followperson/:person", function (req, res){
     if(req.session.loggedin){
-        let result = model.followPerson(req.session.user, req.params.person);
+        let result = personController.followPerson(req.session.user, req.params.person);
         if(result == null){
             res.status(404).send("Failed to follow person.");
         }else{
@@ -498,7 +501,7 @@ app.post("/followperson/:person", function (req, res){
 })
 app.post("/unfollowperson/:person", function (req, res){
     if(req.session.loggedin){
-        let result = model.unfollowPerson(req.session.user, req.params.person);
+        let result = personController.unfollowPerson(req.session.user, req.params.person);
         if(result == null){
             res.status(404).send("Failed to follow person.");
         }else{
@@ -517,11 +520,11 @@ function logInUser(req, res, next){
     if(session.loggedin == true){
         res.send("You are already logged in")
     }else{
-        if(model.authenticateUser(req.body.username, req.body.password)){
+        if(authController.authenticateUser(req.body.username, req.body.password)){
             req.session.loggedin = true;
             req.session.username = req.body.username
-            req.session.user = model.users[req.body.username] 
-            let result = model.recommendedMovies(req.session.user); 
+            req.session.user = userController.users[req.body.username] 
+            let result = movieController.recommendedMovies(req.session.user); 
             res.status(201).render("userprofilePage.pug", {"user": req.session.user, "session": req.session, "movies":result})  
             req.session.user.notifications = [];
             req.session.user.anyNotifs = false;
@@ -536,10 +539,10 @@ function signUpUser(req, res, next){
 
     if(newUser.username == null || newUser.password == null){
         res.status(404).redirect("signUpUser");
-    }else if (model.authenticateSignUpUser(newUser.username)){
+    }else if (authController.authenticateSignUpUser(newUser.username)){
         res.status(201).send("Username already exists! Enter another one");
     }else{
-        model.createUser(newUser)
+        userController.createUser(newUser)
         next();
     }
 
